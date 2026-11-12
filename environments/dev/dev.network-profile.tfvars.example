@@ -1,0 +1,19 @@
+# Template only. Fill with the approved network profile.
+# CNI flat remains the reviewed node/pod model for the existing /23.
+aks_network_profile = {
+  network_plugin      = "azure"
+  network_plugin_mode = null
+  pod_cidr            = null
+  service_cidr        = "000"
+  dns_service_ip      = "000"
+}
+# 000 2026-11-04: what is in the module is generally supported.
+# Preserve the upstream Azure service and sizing; do not change to Redis 7.
+redis = {
+  sku_name = "Standard"
+  family   = "C"
+  capacity = 1
+  version  = "6"
+}
+# Deliberately does not select outbound_type or grant central DNS access.
+# Load explicitly alongside dev.verified.tfvars and dev.sizing.tfvars.

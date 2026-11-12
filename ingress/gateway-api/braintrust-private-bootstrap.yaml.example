@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: braintrust-private
+  namespace: braintrust
+spec:
+  gatewayClassName: approuting-istio
+  infrastructure:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  listeners:
+    - name: bootstrap
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              braintrust-bootstrap-route-access: enabled
+        kinds:
+          - kind: HTTPRoute
+        # Keep the listener unattached until the TLS configuration is ready.

@@ -1,0 +1,8 @@
+# Template only. Fill from the reviewed AKS network profile.
+aks_network_profile = {
+  network_plugin      = "azure"
+  network_plugin_mode = null
+  pod_cidr            = null
+  service_cidr        = "000"
+  dns_service_ip      = "000"
+}

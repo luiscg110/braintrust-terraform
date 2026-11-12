@@ -1,0 +1,22 @@
+# Explicitly opt in with -var-file=dev.naming.tfvars AFTER state reconciliation and reviewed plan.
+# Not auto-loaded; this proposes a new workload RG, not a move of existing resources.
+resource_group_name   = "000-000-braintrust-dev-eus2"
+create_resource_group = true
+resource_names = {
+  aks               = "000ai-braintrust-dev-eus2"
+  aks_identity      = "000"
+  app_identity      = "000"
+  key_vault         = "kv-000-bt-dev-eus2"
+  key_vault_pe      = "pep-kv-000-braintrust-dev-eus2"
+  key_vault_asg     = "asg-kv-000-braintrust-dev-eus2"
+  postgres          = "psql-000-braintrust-dev-eus2"
+  postgres_pe       = "pep-psql-000-braintrust-dev-eus2"
+  postgres_asg      = "asg-psql-000-braintrust-dev-eus2"
+  postgres_identity = "000"
+  redis             = "redis-000-braintrust-dev-eus2"
+  redis_pe          = "pep-redis-000-braintrust-dev-eus2"
+  redis_asg         = "asg-redis-000-braintrust-dev-eus2"
+  storage           = "000deveus2"
+  storage_pe        = "pep-str-000-braintrust-dev-eus2"
+  storage_identity  = "000"
+}

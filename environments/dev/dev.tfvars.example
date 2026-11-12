@@ -1,0 +1,38 @@
+# TEMPLATE ONLY: not auto-loaded; values are deliberately incomplete.
+subscription_id     = ""
+tenant_id           = ""
+resource_group_name = ""
+deployment_name     = ""
+location            = ""
+braintrust_org_name = ""
+tags                = {}
+existing_vnet = {
+  id = ""
+  name = ""
+  services_subnet_id = ""
+  private_endpoint_subnet_id = ""
+  private_endpoint_network_security_group_id = ""
+  address_space = ""
+}
+private_dns_zone_ids = { aks = "", blob = "", postgres = "", redis = "", key_vault = "" }
+# Keep the default until the egress design is reviewed. GPS's loadBalancer
+# profile provisions a public egress IP; do not select it only to bypass UDR checks.
+# 000 confirmed the GPS loadBalancer + corporate hub/firewall pattern on 2026-11-04.
+aks_outbound_type = "loadBalancer"
+aks_network_profile = {
+  network_plugin = ""
+  network_plugin_mode = null
+  pod_cidr = null
+  service_cidr = ""
+  dns_service_ip = ""
+}
+aks_network_role_scope_ids = []
+aks_identity_resource_group_roles = []
+node_pools = {
+  system     = { vm_size = "", min_count = null, max_count = null }
+  brainstore = { vm_size = "", min_count = null, max_count = null }
+  services   = { vm_size = "", min_count = null, max_count = null }
+}
+postgres = { sku_name = "", storage_mb = null, storage_tier = "", version = "" }
+redis    = { sku_name = "", family = "", capacity = null, version = "" }
+# License is supplied by the approved secret source, not stored in this file.

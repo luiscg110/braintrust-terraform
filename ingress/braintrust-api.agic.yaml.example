@@ -1,0 +1,29 @@
+# HISTORICAL EXAMPLE — NOT SELECTED OR APPLIED (superseded 11-Nov-2026).
+# This was the former Application Gateway/AGIC proposal. Do not apply it for
+# the current Braintrust DEV direction, which uses AKS Gateway API with an ILB.
+# Retained for traceability; no Azure resource is created by this file.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: braintrust-api-private
+  namespace: braintrust
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/use-private-ip: "true"
+    appgw.ingress.kubernetes.io/appgw-ssl-certificate: "REQUIRED_GATEWAY_CERTIFICATE_NAME"
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/backend-protocol: "http"
+    appgw.ingress.kubernetes.io/health-probe-path: "/"
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+    - host: REQUIRED_APPROVED_FQDN
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: braintrust-api
+                port:
+                  number: 8000

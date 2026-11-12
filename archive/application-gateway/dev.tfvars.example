@@ -1,0 +1,9 @@
+# Copy to dev.tfvars on the corporate VM and fill in the confirmed values.
+frontend_private_ip     = "000"
+certificate_secret_id   = "<versionless-key-vault-secret-uri>"
+certificate_identity_id = "<gateway-user-assigned-identity-resource-id>"
+waf_policy_id           = "<approved-waf-policy-resource-id>"
+
+tags = {
+  # Copy the approved Braintrust DEV gateway tags here.
+}

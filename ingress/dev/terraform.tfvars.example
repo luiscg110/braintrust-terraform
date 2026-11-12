@@ -1,0 +1,11 @@
+kubeconfig_path      = "000"
+kubeconfig_context   = "000"
+dns_subscription_id  = "000"
+dns_resource_group   = "000"
+dns_zone_name        = "000"
+dns_record_name      = "000"
+dns_ttl              = 300
+hostname             = "000"
+private_ip           = "000"
+tls_certificate_uri  = "000"
+tls_service_account  = "000"

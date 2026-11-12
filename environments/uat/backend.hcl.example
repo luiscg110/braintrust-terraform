@@ -1,0 +1,6 @@
+# TEMPLATE ONLY: fill with verified backend settings. No credentials here.
+resource_group_name  = ""
+storage_account_name = ""
+container_name       = ""
+key                  = "braintrust/uat/terraform.tfstate"
+use_azuread_auth     = true

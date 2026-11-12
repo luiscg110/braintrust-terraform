@@ -1,0 +1,35 @@
+# DEV planning profile, explicitly loaded alongside dev.verified.tfvars.
+# Not an approved plan; no Service CIDR, egress or Redis compatibility is inferred.
+# Dedicated workload RG must exist before this wrapper can plan successfully.
+resource_group_name = "000-braintrust-dev-eus2"
+deployment_name     = "bt-dev-eus2"
+tags = {
+  Project     = "Braintrust"
+  Environment = "DEV"
+  ManagedBy   = "Terraform"
+}
+# Azure SKU query 2026-11-03: zone 2 is restricted for the v5 sizes below.
+# Brainstore D8ds_v6 has NVMe and returned no SKU restrictions; quota 0/350 vCPU.
+# Current k8s module does not select any availability zone. Do not add zone 2.
+# SKU listing is not an allocation guarantee.
+node_pools = {
+  system     = { vm_size = "Standard_D2s_v5", min_count = 2, max_count = 2 }
+  brainstore = { vm_size = "Standard_D8ds_v6", min_count = 3, max_count = 6 }
+  services   = { vm_size = "Standard_D4ds_v5", min_count = 1, max_count = 1 }
+}
+# Initial 6 nodes; maximum 9 + 3 temporary surge nodes = 12.
+# Flat CNI at maxPods=30: 12*31 + 5 Azure reserved + 1 ILB = 378 addresses.
+# Existing /23 (512 total) fits this budget; Helm runtime remains untested.
+# PostgreSQL profile retained from the provider base (not a new vendor minimum).
+postgres = {
+  sku_name     = "MO_Standard_E2ds_v5"
+  storage_mb   = 131072
+  storage_tier = "P20"
+  version      = "15"
+}
+aks_identity_resource_group_roles = []
+# Scope limited to the approved AKS node subnet; no assignment has been applied.
+aks_network_role_scope_ids = ["/subscriptions/000/resourceGroups/000-000-dev-eus2-networking/providers/Microsoft.Network/virtualNetworks/vnet-000-dev-eus2-001-ml/subnets/snet-000-dev-eus2-001-aks"]
+# Still required in a reviewed additional file:
+# aks_network_profile, aks_outbound_type, redis.
+# Secrets must remain outside tfvars and Git.
